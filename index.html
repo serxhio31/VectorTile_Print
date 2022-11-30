@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Using OpenLayers with Vite</title>    
+  </head>
+  <body>
+    <div id="map"></div>
+ <div style="position:absolute ; bottom:50px">
+    <form class="form">
+      <label for="format">Page size </label>
+      <select id="format">
+        <option value="a0">A0 (slow)</option>
+        <option value="a1">A1</option>
+        <option value="a2">A2</option>
+        <option value="a3">A3</option>
+        <option value="a4" selected>A4</option>
+        <option value="a5">A5 (fast)</option>
+      </select>
+      <label for="resolution">Resolution </label>
+      <select id="resolution">
+        <option value="72">72 dpi (fast)</option>
+        <option value="150">150 dpi</option>
+        <option value="300">300 dpi (slow)</option>
+      </select>
+    </form>
+    <button id="export-pdf">Export PDF</button>
+  </div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
