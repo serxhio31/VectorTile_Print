@@ -5,33 +5,35 @@ import VectorTileSource from 'ol/source/VectorTile';
 import MVT from 'ol/format/MVT';
 import {stylefunction,applyStyle} from 'ol-mapbox-style';
 import jsPDF from 'jspdf';
+import proj4 from 'proj4';
+import {register} from 'ol/proj/proj4';
+import {get as getProjection, addProjection} from 'ol/proj';
 
-// const map = new Map({
-//   target: 'map',
-//   layers: [
-//     new TileLayer({
-//       source: new OSM()
-//     })
-//   ],
-//   view: new View({
-//     center: [0, 0],
-//     zoom: 2
-//   })
-// });
+//assign new projection
+proj4.defs("EPSG:6870","+proj=tmerc +lat_0=0 +lon_0=20 +k=1 +x_0=500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs");
+register(proj4)
+const albProj = new getProjection('EPSG:6870');
 
+//passing the projectioin instance to the library
+addProjection(albProj);
+
+
+//projection centres
+const center_6870 = [485450.770941,4577283.358735];
+const center_4326 = [19.8,41.3];
 
 
 const map = new Map({ target: "map" });
 map.setView(
   new View({
-    center:[41,19],// ol.proj.fromLonLat([41, 20]),
-    zoom: 0
+    center:center_4326,// ol.proj.fromLonLat([41, 20]),
+    zoom: 0,
   })
 );   
 const layer = new VectorTile({declutter: true,
 source: new VectorTileSource({
     format: new MVT(),
-    url: 'https://basemap.asig.gov.al/server/rest/services/Hosted/Basemap_VT_0909202/VectorTileServer/tile/{z}/{y}/{x}.pbf'
+    url: 'https://basemap.asig.gov.al/server/rest/services/Hosted/Basemap_VT_0909202/VectorTileServer/tile/{z}/{y}/{x}.pbf',
   })
 });
 map.addLayer(layer);
