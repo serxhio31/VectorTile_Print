@@ -1,3 +1,6 @@
+// Example:
+// https://gis.stackexchange.com/questions/433692/openlayers-6-print-map-with-scale-to-pdf-via-jspdf
+
 import './style.css';
 import {Map, View} from 'ol';
 import VectorTile  from 'ol/layer/VectorTile';
