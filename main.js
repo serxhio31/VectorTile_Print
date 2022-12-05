@@ -23,14 +23,15 @@ addProjection(albProj);
 
 //projection centres
 const center_6870 = [485450.770941,4577283.358735];
+const mapCenter = [17392.366501868935, 9135749.30030383];
 const center_4326 = [19.8,41.3];
 
 
 const map = new Map({ target: "map" });
 map.setView(
   new View({
-    center:center_4326,// ol.proj.fromLonLat([41, 20]),
-    zoom: 0,
+    center:mapCenter,// ol.proj.fromLonLat([41, 20]),
+    zoom: 8,
   })
 );   
 const layer = new VectorTile({declutter: true,
@@ -62,13 +63,18 @@ stylefunction(layer,glStyle,layerIDS);
 })
 
 });
+map.on('click', function(evt){
+  console.log(evt.coordinate);
+});
 
+// duhet me nderru keto sizet, a4 e nderrova per tju pershtat, por se di formulen si duhen
+// te tjerat
 const dims = {
   a0: [1189, 841],
   a1: [841, 594],
   a2: [594, 420],
   a3: [420, 297],
-  a4: [297, 210],
+  a4: [277, 170],
   a5: [210, 148],
 };
 
@@ -117,11 +123,18 @@ exportButton.addEventListener(
       mapContext.globalAlpha = 1;
       mapContext.setTransform(1, 0, 0, 1, 0, 0);
       const pdf = new jsPDF('landscape', undefined, format);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (height * pdfWidth) / width;
+
+      // keto jane argumentat per tekstin, qe ta vendosen ne qender
+      pdf.text('Hello world!',  148.5, 15, null, null, 'center');
+
+      // 10, 30 jane x,y ku fillon harta ne dokument
       pdf.addImage(
         mapCanvas.toDataURL('image/png'),
         'PNG',
-        0,
-        0,
+        10,
+        30,
         dim[0],
         dim[1]
       );
